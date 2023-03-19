@@ -20,7 +20,10 @@ public class ClearCounter : BaseCounter
         // Player is holding a plate
         if (player.GetKitchenObject().TryGetPlate(out PlateKitchenObject plateKitchenObject))
         {
-          GetKitchenObject().DestroySelf();
+          if (plateKitchenObject.TryAddIngredient(GetKitchenObject().GetKitchenObjectSO()))
+          {
+            GetKitchenObject().DestroySelf();
+          }
         }
         else
         {
