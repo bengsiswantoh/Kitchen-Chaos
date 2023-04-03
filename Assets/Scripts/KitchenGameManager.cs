@@ -18,7 +18,8 @@ public class KitchenGameManager : MonoBehaviour
   private State state;
   private float waitingToStartTimer = 1f;
   private float countdownToStartTimer = 3f;
-  private float gamePlayingTimer = 10f;
+  private float gamePlayingTimer;
+  private float gamePlayingTimerMax = 10f;
 
   public bool IsGamePlaying()
   {
@@ -30,9 +31,19 @@ public class KitchenGameManager : MonoBehaviour
     return state == State.CountdownToStart;
   }
 
+  public bool IsGameOver()
+  {
+    return state == State.GameOver;
+  }
+
   public float GetCountdownToStartTimer()
   {
     return countdownToStartTimer;
+  }
+
+  public float GetGamePlayingTimerNormalize()
+  {
+    return 1 - (gamePlayingTimer / gamePlayingTimerMax);
   }
 
   // Start is called before the first frame update
@@ -60,6 +71,7 @@ public class KitchenGameManager : MonoBehaviour
         if (countdownToStartTimer < 0f)
         {
           state = State.GamePlaying;
+          gamePlayingTimer = gamePlayingTimerMax;
           OnStateChange?.Invoke(this, EventArgs.Empty);
         }
         break;

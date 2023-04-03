@@ -10,7 +10,6 @@ public class DeliveryManager : MonoBehaviour
   public event EventHandler OnRecipeSuccess;
   public event EventHandler OnRecipeFailed;
 
-
   public static DeliveryManager Instance { get; private set; }
 
   [SerializeField] private RecipeListSO recipeListSO;
@@ -18,6 +17,12 @@ public class DeliveryManager : MonoBehaviour
   private float spawnRecipeTimer;
   private float spawnRecipeTimerMax = 4f;
   private int waitingRecipeMax = 4;
+  private int successfulRecipeAmount;
+
+  public int GetSuccessfulRecipeAmount()
+  {
+    return successfulRecipeAmount;
+  }
 
   public void DeliverRecipe(PlateKitchenObject plateKitchenObject)
   {
@@ -54,6 +59,8 @@ public class DeliveryManager : MonoBehaviour
         if (plateContentMatchesRecipe)
         {
           // Player delivered the correct recipe!
+          successfulRecipeAmount++;
+
           waitingRecipeSOList.RemoveAt(i);
 
           OnRecipeCompleted?.Invoke(this, EventArgs.Empty);
