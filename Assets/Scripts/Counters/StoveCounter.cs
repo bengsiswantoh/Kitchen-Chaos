@@ -28,6 +28,11 @@ public class StoveCounter : BaseCounter, IHasProgress
   private float burningTimer;
   private BurningRecipeSO burningRecipeSO;
 
+  public bool IsFried()
+  {
+    return state == State.Fried;
+  }
+
   private void Start()
   {
     state = State.Idle;
